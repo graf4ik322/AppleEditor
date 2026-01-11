@@ -1,0 +1,128 @@
+{
+  "Apple Watch": {
+    "Apple Watch Ultra 3": {
+      "default": {
+        "purchase_entry": 48000,
+        "wholesale_small": 64000,
+        "market": 66000
+      }
+    },
+    "Apple Watch Ultra 2": {
+      "default": {
+        "purchase_entry": 38000,
+        "wholesale_small": 52000,
+        "market": 54000
+      }
+    },
+    "Apple Watch Series 11 42mm": {
+      "default": {
+        "purchase_entry": 23000,
+        "wholesale_small": 30000,
+        "market": 31500
+      }
+    },
+    "Apple Watch Series 11 46mm": {
+      "default": {
+        "purchase_entry": 24000,
+        "wholesale_small": 32000,
+        "market": 34000
+      }
+    }
+  },
+  "iPhone": {
+    "iPhone 17 Pro Max": {
+      "256GB (SIM + eSIM)": {
+        "purchase_entry": 90000,
+        "wholesale_small": 107000,
+        "market": 112000
+      },
+      "512GB (SIM + eSIM)": {
+        "purchase_entry": 105000,
+        "wholesale_small": 125000,
+        "market": 136000
+      }
+    },
+    "iPhone 17 Pro": {
+      "256GB (SIM + eSIM)": {
+        "purchase_entry": 80000,
+        "wholesale_small": 97000,
+        "market": 107000
+      },
+      "512GB (SIM + eSIM)": {
+        "purchase_entry": 100000,
+        "wholesale_small": 115000,
+        "market": 125500
+      }
+    },
+    "iPhone 17": {
+      "256GB (eSIM)": {
+        "purchase_entry": 55000,
+        "wholesale_small": 65000,
+        "market": 74000
+      },
+      "512GB (eSIM)": {
+        "purchase_entry": 75000,
+        "wholesale_small": 85000,
+        "market": 95000
+      }
+    },
+    "iPhone 17 Air": {
+      "default (eSIM)": {
+        "purchase_entry": 55000,
+        "wholesale_small": 67000,
+        "market": 82000
+      }
+    },
+    "iPhone 16": {
+      "128GB": {
+        "purchase_entry": 40000,
+        "wholesale_small": 50000,
+        "market": 57300
+      },
+      "256GB": {
+        "purchase_entry": 45000,
+        "wholesale_small": 55000,
+        "market": 62000
+      }
+    }
+  },
+  "iPad": {
+    "iPad 2025": {
+      "256GB": {
+        "purchase_entry": 25000,
+        "wholesale_small": 31000,
+        "market": 38500
+      }
+    },
+    "iPad Air 11-inch (2025, Wi-Fi)": {
+      "256GB": {
+        "purchase_entry": 45000,
+        "wholesale_small": 52000,
+        "market": 57000
+      }
+    },
+    "iPad Air 13-inch (2025, Wi-Fi)": {
+      "256GB": {
+        "purchase_entry": 55000,
+        "wholesale_small": 60000,
+        "market": 65000
+      }
+    }
+  },
+  "MacBook": {
+    "MacBook Air 15-inch (2025, M4)": {
+      "16GB / 256GB": {
+        "purchase_entry": 75000,
+        "wholesale_small": 83000,
+        "market": 91000
+      }
+    },
+    "MacBook Air 13-inch (2025, M4)": {
+      "16GB / 256GB": {
+        "purchase_entry": 60000,
+        "wholesale_small": 68000,
+        "market": 77000
+      }
+    }
+  }
+}

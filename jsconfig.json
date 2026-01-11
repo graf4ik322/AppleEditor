@@ -1,0 +1,10 @@
+{
+  "recommendations": {
+    "properties": {
+      "jsx": "react",
+      "jsxImportSource": null,
+      "jsxFactory": null,
+      "jsxFragmentFactory": null
+    }
+  }
+}
