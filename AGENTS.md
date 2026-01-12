@@ -458,3 +458,23 @@ const handleDelete = () => {
   3. Create Git tag: `git tag v1.0.0`
   4. Push tags: `git push origin --tags`
   5. Create GitHub Release
+
+## 🚫 Critical Rules - Prohibited Solutions
+
+### Mobile Input Bug - Prohibited Approaches
+
+- **DO NOT use onInput instead of onChange**: This approach failed and caused keyboard dismissal
+- **DO NOT add inputMode attributes**: These attributes did not resolve the keyboard issue
+- **DO NOT use autoComplete/autoCapitalize/autoCorrect attributes**: These did not fix the problem
+- **DO NOT add key attributes to inputs**: React keys did not solve the reconciliation issue
+- **DO NOT use refs for focus management**: Refs approach did not prevent keyboard dismissal
+- **DO NOT use debounced handlers**: Debouncing did not resolve the continuous typing problem
+- **DO NOT modify event handlers**: Custom event handling failed to solve the issue
+
+### Required Approach for Mobile Keyboard Fix
+
+- **MUST analyze ConfigItem component**: Study how price inputs work successfully there
+- **MUST use identical input pattern as ConfigItem**: Apply the exact same pattern from working price fields
+- **MUST test on actual mobile device**: Verify fixes work on real mobile browsers (iOS Safari, Chrome Mobile)
+- **MUST use React's built-in controlled components**: Avoid any custom event handling modifications
+- **MUST compare working vs broken components**: Identify exact differences between ConfigItem and Sidebar inputs
