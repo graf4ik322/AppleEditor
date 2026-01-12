@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -35,15 +35,6 @@ export function Sidebar({
   const [selectedModel, setSelectedModel] = useState("");
   const [newConfig, setNewConfig] = useState("");
   const [newConfigPrice, setNewConfigPrice] = useState("");
-
-  // Handle composition events for mobile IME
-  const handleCompositionEnd = useCallback(
-    (setter: (value: string) => void) =>
-      (e: React.CompositionEvent<HTMLInputElement>) => {
-        setter((e.target as HTMLInputElement).value);
-      },
-    [],
-  );
 
   useEffect(() => {
     const handleToggle = () => setIsMobileSidebarOpen((prev) => !prev);
@@ -107,7 +98,6 @@ export function Sidebar({
                 id="new-category"
                 value={newCategory}
                 onChange={(e) => setNewCategory(e.target.value)}
-                onCompositionEnd={handleCompositionEnd(setNewCategory)}
                 placeholder="iPhone, MacBook..."
                 className="flex-1 text-sm h-8 sm:h-10"
                 onKeyPress={(e) => e.key === "Enter" && handleAddCategory()}
@@ -164,7 +154,6 @@ export function Sidebar({
                 id="new-model"
                 value={newModel}
                 onChange={(e) => setNewModel(e.target.value)}
-                onCompositionEnd={handleCompositionEnd(setNewModel)}
                 placeholder="iPhone 15, MacBook..."
                 className="flex-1 text-sm h-8 sm:h-10"
                 disabled={!selectedCategory}
@@ -243,7 +232,6 @@ export function Sidebar({
               id="new-config"
               value={newConfig}
               onChange={(e) => setNewConfig(e.target.value)}
-              onCompositionEnd={handleCompositionEnd(setNewConfig)}
               placeholder="256GB, 512GB..."
               className="text-sm h-8 sm:h-10"
               disabled={!selectedCategory || !selectedModel}
@@ -260,7 +248,6 @@ export function Sidebar({
                 type="number"
                 value={newConfigPrice}
                 onChange={(e) => setNewConfigPrice(e.target.value)}
-                onCompositionEnd={handleCompositionEnd(setNewConfigPrice)}
                 placeholder="99999"
                 min="0"
                 step="0.01"
