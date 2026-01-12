@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -9,12 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import { ChevronDown, ChevronRight, Plus, X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import type { SidebarProps } from "@/types";
 
 export function Sidebar({
@@ -24,18 +18,18 @@ export function Sidebar({
   onAddModel,
   onAddConfig,
 }: SidebarProps) {
-  const [isCategoriesOpen, setIsCategoriesOpen] = useState(true);
-  const [isModelsOpen, setIsModelsOpen] = useState(true);
-  const [isConfigsOpen, setIsConfigsOpen] = useState(true);
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
-  const [newCategory, setNewCategory] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [newModel, setNewModel] = useState("");
   const [selectedModel, setSelectedModel] = useState("");
-  const [newConfig, setNewConfig] = useState("");
-  const [newConfigPrice, setNewConfigPrice] = useState("");
 
+  // Create refs for uncontrolled inputs
+  const categoryInputRef = useRef<HTMLInputElement>(null);
+  const modelInputRef = useRef<HTMLInputElement>(null);
+  const configInputRef = useRef<HTMLInputElement>(null);
+  const priceInputRef = useRef<HTMLInputElement>(null);
+
+  // Restore hamburger menu functionality
   useEffect(() => {
     const handleToggle = () => setIsMobileSidebarOpen((prev) => !prev);
     window.addEventListener("toggle-mobile-sidebar", handleToggle);
@@ -44,26 +38,42 @@ export function Sidebar({
   }, []);
 
   const handleAddCategory = () => {
-    if (newCategory.trim()) {
-      onAddCategory(newCategory.trim());
-      setNewCategory("");
+    const value = categoryInputRef.current?.value || "";
+    if (value.trim()) {
+      onAddCategory(value.trim());
+      if (categoryInputRef.current) {
+        categoryInputRef.current.value = "";
+      }
     }
   };
 
   const handleAddModel = () => {
-    if (selectedCategory && newModel.trim()) {
-      onAddModel(selectedCategory, newModel.trim());
-      setNewModel("");
+    const value = modelInputRef.current?.value || "";
+    if (selectedCategory && value.trim()) {
+      onAddModel(selectedCategory, value.trim());
+      if (modelInputRef.current) {
+        modelInputRef.current.value = "";
+      }
     }
   };
 
   const handleAddConfig = () => {
-    if (selectedCategory && selectedModel && newConfig.trim()) {
-      const price = parseFloat(newConfigPrice);
-      if (!isNaN(price) && price >= 0) {
-        onAddConfig(selectedCategory, selectedModel, newConfig.trim(), price);
-        setNewConfig("");
-        setNewConfigPrice("");
+    const configValue = configInputRef.current?.value || "";
+    const priceValue = priceInputRef.current?.value || "";
+    const price = parseFloat(priceValue);
+    if (
+      selectedCategory &&
+      selectedModel &&
+      configValue.trim() &&
+      !isNaN(price) &&
+      price >= 0
+    ) {
+      onAddConfig(selectedCategory, selectedModel, configValue.trim(), price);
+      if (configInputRef.current) {
+        configInputRef.current.value = "";
+      }
+      if (priceInputRef.current) {
+        priceInputRef.current.value = "";
       }
     }
   };
@@ -79,28 +89,21 @@ export function Sidebar({
       </h2>
 
       {/* Add Category */}
-      <Collapsible open={isCategoriesOpen} onOpenChange={setIsCategoriesOpen}>
-        <CollapsibleTrigger className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2 hover:text-gray-900 w-full">
-          {isCategoriesOpen ? (
-            <ChevronDown className="h-4 w-4" />
-          ) : (
-            <ChevronRight className="h-4 w-4" />
-          )}
-          Добавить категорию
-        </CollapsibleTrigger>
-        <CollapsibleContent className="space-y-2 mb-3 sm:mb-4">
+      <div className="mb-3 sm:mb-4">
+        <h3 className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2 hover:text-gray-900">
+          ➕ Добавить категорию
+        </h3>
+        <div className="space-y-2">
           <div className="space-y-2">
             <Label htmlFor="new-category" className="text-xs sm:text-sm">
               Название категории
             </Label>
             <div className="flex gap-2">
-              <Input
+              <input
+                ref={categoryInputRef}
                 id="new-category"
-                value={newCategory}
-                onChange={(e) => setNewCategory(e.target.value)}
                 placeholder="iPhone, MacBook..."
-                className="flex-1 text-sm h-8 sm:h-10"
-                onKeyPress={(e) => e.key === "Enter" && handleAddCategory()}
+                className="flex-1 text-sm h-8 sm:h-10 px-3 py-2 border border-gray-300 rounded-md"
               />
               <Button
                 onClick={handleAddCategory}
@@ -111,20 +114,15 @@ export function Sidebar({
               </Button>
             </div>
           </div>
-        </CollapsibleContent>
-      </Collapsible>
+        </div>
+      </div>
 
       {/* Add Model */}
-      <Collapsible open={isModelsOpen} onOpenChange={setIsModelsOpen}>
-        <CollapsibleTrigger className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2 hover:text-gray-900 w-full">
-          {isModelsOpen ? (
-            <ChevronDown className="h-4 w-4" />
-          ) : (
-            <ChevronRight className="h-4 w-4" />
-          )}
-          Добавить модель
-        </CollapsibleTrigger>
-        <CollapsibleContent className="space-y-2 mb-3 sm:mb-4">
+      <div className="mb-3 sm:mb-4">
+        <h3 className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2 hover:text-gray-900">
+          ➕ Добавить модель
+        </h3>
+        <div className="space-y-2">
           <div className="space-y-2">
             <Label htmlFor="category-select" className="text-xs sm:text-sm">
               Категория
@@ -150,14 +148,12 @@ export function Sidebar({
               Название модели
             </Label>
             <div className="flex gap-2">
-              <Input
+              <input
+                ref={modelInputRef}
                 id="new-model"
-                value={newModel}
-                onChange={(e) => setNewModel(e.target.value)}
                 placeholder="iPhone 15, MacBook..."
-                className="flex-1 text-sm h-8 sm:h-10"
+                className="flex-1 text-sm h-8 sm:h-10 px-3 py-2 border border-gray-300 rounded-md"
                 disabled={!selectedCategory}
-                onKeyPress={(e) => e.key === "Enter" && handleAddModel()}
               />
               <Button
                 onClick={handleAddModel}
@@ -169,20 +165,15 @@ export function Sidebar({
               </Button>
             </div>
           </div>
-        </CollapsibleContent>
-      </Collapsible>
+        </div>
+      </div>
 
       {/* Add Config */}
-      <Collapsible open={isConfigsOpen} onOpenChange={setIsConfigsOpen}>
-        <CollapsibleTrigger className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2 hover:text-gray-900 w-full">
-          {isConfigsOpen ? (
-            <ChevronDown className="h-4 w-4" />
-          ) : (
-            <ChevronRight className="h-4 w-4" />
-          )}
-          Добавить конфигурацию
-        </CollapsibleTrigger>
-        <CollapsibleContent className="space-y-2">
+      <div>
+        <h3 className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2 hover:text-gray-900">
+          ➕ Добавить конфигурацию
+        </h3>
+        <div className="space-y-2">
           <div className="space-y-2">
             <Label
               htmlFor="config-category-select"
@@ -228,32 +219,29 @@ export function Sidebar({
             <Label htmlFor="new-config" className="text-xs sm:text-sm">
               Название конфигурации
             </Label>
-            <Input
+            <input
+              ref={configInputRef}
               id="new-config"
-              value={newConfig}
-              onChange={(e) => setNewConfig(e.target.value)}
               placeholder="256GB, 512GB..."
-              className="text-sm h-8 sm:h-10"
+              className="text-sm h-8 sm:h-10 w-full px-3 py-2 border border-gray-300 rounded-md"
               disabled={!selectedCategory || !selectedModel}
-              onKeyPress={(e) => e.key === "Enter" && handleAddConfig()}
             />
           </div>
+
           <div className="space-y-2">
             <Label htmlFor="config-price" className="text-xs sm:text-sm">
               Базовая цена
             </Label>
             <div className="flex gap-2">
-              <Input
+              <input
+                ref={priceInputRef}
                 id="config-price"
                 type="number"
-                value={newConfigPrice}
-                onChange={(e) => setNewConfigPrice(e.target.value)}
                 placeholder="99999"
                 min="0"
                 step="0.01"
-                className="flex-1 text-sm h-8 sm:h-10"
+                className="flex-1 text-sm h-8 sm:h-10 px-3 py-2 border border-gray-300 rounded-md"
                 disabled={!selectedCategory || !selectedModel}
-                onKeyPress={(e) => e.key === "Enter" && handleAddConfig()}
               />
               <Button
                 onClick={handleAddConfig}
@@ -265,8 +253,8 @@ export function Sidebar({
               </Button>
             </div>
           </div>
-        </CollapsibleContent>
-      </Collapsible>
+        </div>
+      </div>
     </>
   );
 
@@ -298,6 +286,7 @@ export function Sidebar({
                 <X className="h-5 w-5" />
               </Button>
             </div>
+
             <div className="flex-1 overflow-y-auto p-4">
               <SidebarContent />
             </div>
