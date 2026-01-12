@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-01-12
+
+### Fixed
+
+- **Mobile Keyboard Bug**: Resolved keyboard dismissal issue in sidebar form inputs
+  - Implemented `onCompositionEnd` event handlers for proper IME support
+  - Added composition events to handle mobile text input correctly
+  - Fixed continuous typing issues on mobile devices with virtual keyboards
+  - Maintained compatibility with desktop input behavior
+  - Applied React composition events pattern for cross-platform compatibility
+
 ## [1.1.0] - 2026-01-11
 
 ### Added
