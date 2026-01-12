@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -35,6 +35,13 @@ export function Sidebar({
   const [selectedModel, setSelectedModel] = useState("");
   const [newConfig, setNewConfig] = useState("");
   const [newConfigPrice, setNewConfigPrice] = useState("");
+
+  useEffect(() => {
+    const handleToggle = () => setIsMobileSidebarOpen((prev) => !prev);
+    window.addEventListener("toggle-mobile-sidebar", handleToggle);
+    return () =>
+      window.removeEventListener("toggle-mobile-sidebar", handleToggle);
+  }, []);
 
   const handleAddCategory = () => {
     if (newCategory.trim()) {

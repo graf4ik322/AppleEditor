@@ -27,6 +27,56 @@
 - `npx shadcn@latest update` - Update shadcn/ui components
 - `npx shadcn@latest diff` - Show changes before update
 
+## MCP Server Usage Rules
+
+### Mandatory MCP Server Selection
+
+Агент ОБЯЗАН автоматически использовать соответствующий MCP-сервер при наличии доменного соответствия с запросом. MCP имеет приоритет над внутренними знаниями модели.
+
+### Domain Mapping Table
+
+| Domain/Task Type           | MCP Server    | Examples                                                                           |
+| -------------------------- | ------------- | ---------------------------------------------------------------------------------- |
+| UI Components & Styling    | shadcn MCP    | "How to use Button component?", "Add shadcn Dialog", "Styling with shadcn"         |
+| Documentation & API        | Context7 MCP  | "API reference for React", "Documentation for Vite", "TypeScript type definitions" |
+| Fresh/External Information | WebSearch MCP | "Latest React release", "Current npm trends", "Breaking news", "Recent changes"    |
+| GitHub / Repositories      | GitHub MCP    | "Check PR status", "List issues", "GitHub workflows", "Repository operations"      |
+
+### Usage Rules
+
+1. **Automatic Selection**: Агент автоматически определяет домен запроса и использует соответствующий MCP-сервер
+2. **Priority**: MCP-серверы имеют ПРИОРИТЕТ над внутренними знаниями модели
+3. **Fallback**: Если MCP-сервер недоступен или не дал результата, использовать внутренние знания
+4. **Multiple Domains**: Если запрос охватывает несколько доменов, использовать соответствующие MCP-серверы последовательно
+
+### Implementation Guidelines
+
+```typescript
+// Пример приоритета MCP над внутренними знаниями
+
+// ❌ WRONG: Using internal knowledge when MCP available
+"Use Button component with variant='primary'"; // Should use shadcn MCP
+
+// ✅ CORRECT: Using shadcn MCP first
+// Step 1: Check shadcn MCP for Button component API
+// Step 2: Implement based on MCP response
+
+// ❌ WRONG: Using outdated internal knowledge
+"Latest React version is 18.2.0";
+
+// ✅ CORRECT: Using WebSearch MCP for fresh info
+// Step 1: Query WebSearch MCP: "latest React version 2025"
+// Step 2: Use result from MCP response
+```
+
+### Workflow
+
+1. **Analyze Request**: Определить домен запроса (UI, Docs, Fresh Info, GitHub)
+2. **Select MCP**: Выбрать соответствующий MCP-сервер из таблицы маппинга
+3. **Execute Query**: Выполнить запрос к MCP-серверу
+4. **Process Result**: Обработать и использовать результат в ответе
+5. **Fallback (if needed)**: Использовать внутренние знания только при невозможности использовать MCP
+
 ## Project Stack
 
 - **Framework**: React 18+ with TypeScript

@@ -6,6 +6,11 @@ import type { HeaderProps } from "@/types";
 export function Header({ onLoadFile, onSaveFile, hasData }: HeaderProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  const toggleMobileSidebar = () => {
+    // Emit custom event for mobile sidebar toggle
+    window.dispatchEvent(new CustomEvent("toggle-mobile-sidebar"));
+  };
+
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -25,7 +30,12 @@ export function Header({ onLoadFile, onSaveFile, hasData }: HeaderProps) {
     <div className="bg-white border-b border-gray-200 px-3 xs:px-4 sm:px-6 py-3 sm:py-4">
       <div className="max-w-7xl xl:max-w-6xl 2xl:max-w-7xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-2 sm:gap-3">
-          <Button variant="ghost" size="sm" className="md:hidden p-2">
+          <Button
+            variant="ghost"
+            size="sm"
+            className="md:hidden p-2"
+            onClick={toggleMobileSidebar}
+          >
             <Menu className="h-5 w-5" />
           </Button>
           <div>

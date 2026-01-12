@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Trash2 } from "lucide-react";
+import { Trash2, ShoppingCart, Package, TrendingUp } from "lucide-react";
 import type { ConfigItemProps, PriceField } from "@/types";
 
 export function ConfigItem({
@@ -20,28 +20,29 @@ export function ConfigItem({
   };
 
   return (
-    <div className="bg-gray-50 p-2 sm:p-3 rounded-lg space-y-2 sm:space-y-3">
+    <div className="bg-gray-50 p-1.5 xs:p-2 sm:p-3 rounded-lg space-y-1.5 xs:space-y-2 sm:space-y-3">
       <div className="flex items-center justify-between">
-        <h4 className="font-medium text-gray-900 text-sm sm:text-base">
+        <h4 className="font-medium text-gray-900 text-sm xs:text-sm sm:text-base">
           {configName}
         </h4>
         <Button
           variant="outline"
           size="sm"
           onClick={() => onDeleteConfig(category, model, configName)}
-          className="text-red-600 hover:text-red-700 hover:border-red-300 h-7 w-7 sm:h-8 sm:w-8 lg:h-9 lg:w-9 p-1"
+          className="text-red-600 hover:text-red-700 hover:border-red-300 h-5 w-5 xs:h-6 xs:w-6 sm:h-7 sm:w-7 p-0.5"
         >
-          <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
+          <Trash2 className="h-2.5 w-2.5 xs:h-3 xs:w-3 sm:h-3.5 sm:w-3.5" />
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-2 xs:gap-3">
+      <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 gap-1.5 xs:gap-2 sm:gap-3">
         <div className="space-y-1">
           <Label
             htmlFor={`${configName}-purchase`}
-            className="text-xs font-medium text-gray-700"
+            className="text-xs font-medium text-gray-700 flex items-center gap-1"
           >
-            Закупочная*
+            <ShoppingCart className="h-3 w-3 text-green-600" />
+            Закуп*
           </Label>
           <Input
             id={`${configName}-purchase`}
@@ -53,16 +54,17 @@ export function ConfigItem({
             placeholder="0"
             min="0"
             step="0.01"
-            className="text-xs sm:text-sm h-8 sm:h-9"
+            className="text-xs sm:text-sm h-7 xs:h-8 sm:h-9"
           />
         </div>
 
         <div className="space-y-1">
           <Label
             htmlFor={`${configName}-wholesale`}
-            className="text-xs font-medium text-gray-700"
+            className="text-xs font-medium text-gray-700 flex items-center gap-1"
           >
-            Оптовая малая
+            <Package className="h-3 w-3 text-blue-600" />
+            Опт
           </Label>
           <Input
             id={`${configName}-wholesale`}
@@ -74,16 +76,17 @@ export function ConfigItem({
             placeholder="0"
             min="0"
             step="0.01"
-            className="text-xs sm:text-sm h-8 sm:h-9"
+            className="text-xs sm:text-sm h-7 xs:h-8 sm:h-9"
           />
         </div>
 
         <div className="space-y-1">
           <Label
             htmlFor={`${configName}-market`}
-            className="text-xs font-medium text-gray-700"
+            className="text-xs font-medium text-gray-700 flex items-center gap-1"
           >
-            Рыночная
+            <TrendingUp className="h-3 w-3 text-purple-600" />
+            Рынок
           </Label>
           <Input
             id={`${configName}-market`}
@@ -93,7 +96,7 @@ export function ConfigItem({
             placeholder="0"
             min="0"
             step="0.01"
-            className="text-xs sm:text-sm h-8 sm:h-9"
+            className="text-xs sm:text-sm h-7 xs:h-8 sm:h-9"
           />
         </div>
       </div>
